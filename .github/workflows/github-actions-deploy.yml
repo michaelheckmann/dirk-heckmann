@@ -1,0 +1,50 @@
+name: Deploy FTP
+
+on:
+  push:
+    branches:
+      - main
+  repository_dispatch:
+    types: [publish-event]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+      CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
+      CONTENTFUL_PREVIEW_TOKEN: ${{ secrets.CONTENTFUL_PREVIEW_TOKEN }}
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 🚧 Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+
+      - name: 🎣 Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: ⏬ Install Project Dependencies
+        run: npm ci
+
+      - name: 🔨 Build Project
+        run: npm run build
+
+      - name: 🔍 Verify Project
+        run: ls -la dist
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          protocol: ftp
+          local-dir: ./dist/
