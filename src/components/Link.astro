@@ -1,0 +1,31 @@
+---
+import type { TypeLinkSkeleton } from "@types";
+import clsx from "clsx";
+import type { Entry } from "contentful";
+
+export interface Props
+  extends Entry<TypeLinkSkeleton, "WITHOUT_UNRESOLVABLE_LINKS", string> {}
+
+const { fields } = Astro.props;
+const { title, content, link } = fields;
+---
+
+<a
+  href={link?.toString() || "#"}
+  class={clsx("flex flex-col items-start gap-1", {
+    "cursor-pointer": link,
+    "cursor-default": !link,
+  })}
+  target="_blank"
+>
+  <p class="text-gray-500 text-[15px]">
+    {title}
+  </p>
+  <p
+    class={clsx("font-medium decoration-gray-400 underline-offset-2", {
+      underline: link,
+    })}
+  >
+    <Fragment set:html={content.split("\\n").join("<br />")} />
+  </p>
+</a>

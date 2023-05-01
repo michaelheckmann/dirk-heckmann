@@ -1,18 +1,23 @@
-import type { TypeMetaSkeleton } from "@types";
+import type { TypeHomeSkeleton, TypeMetaSkeleton } from "@types";
 
-import type { Asset } from "contentful";
 import { ENTRY } from "./constants";
 import { contentfulClient } from "./contentful";
 
-type GetMeta = TypeMetaSkeleton & {
-  fields: {
-    ogImage: Asset;
-  };
+export const getMeta = async (locale = "de") => {
+  return await contentfulClient.withoutUnresolvableLinks.getEntry<TypeMetaSkeleton>(
+    ENTRY.META,
+    {
+      locale,
+    }
+  );
 };
 
-export const getMeta = async (locale = "de") => {
-  const entry = await contentfulClient.getEntry<TypeMetaSkeleton>(ENTRY.META, {
-    locale,
-  });
-  return entry as unknown as GetMeta;
+export const getHome = async (locale = "de") => {
+  return await contentfulClient.withoutUnresolvableLinks.getEntry<TypeHomeSkeleton>(
+    ENTRY.HOME,
+    {
+      locale,
+      include: 2,
+    }
+  );
 };

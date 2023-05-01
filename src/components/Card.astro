@@ -1,63 +1,36 @@
 ---
 export interface Props {
-	title: string;
-	body: string;
-	href: string;
+  imageSource: string;
+  caption: string;
 }
 
-const { href, title, body } = Astro.props;
+const { imageSource, caption } = Astro.props;
 ---
 
-<li class="link-card">
-	<a href={href}>
-		<h2>
-			{title}
-			<span>&rarr;</span>
-		</h2>
-		<p>
-			{body}
-		</p>
-	</a>
-</li>
-<style>
-	.link-card {
-		list-style: none;
-		display: flex;
-		padding: 0.25rem;
-		background-color: white;
-		background-image: none;
-		background-size: 400%;
-		border-radius: 0.6rem;
-		background-position: 100%;
-		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-	}
-
-	.link-card > a {
-		width: 100%;
-		text-decoration: none;
-		line-height: 1.4;
-		padding: 1rem 1.3rem;
-		border-radius: 0.35rem;
-		color: #111;
-		background-color: white;
-		opacity: 0.8;
-	}
-	h2 {
-		margin: 0;
-		font-size: 1.25rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	p {
-		margin-top: 0.5rem;
-		margin-bottom: 0;
-		color: #444;
-	}
-	.link-card:is(:hover, :focus-within) {
-		background-position: 0;
-		background-image: var(--accent-gradient);
-	}
-	.link-card:is(:hover, :focus-within) h2 {
-		color: rgb(var(--accent));
-	}
-</style>
+<a
+  class="cursor-pointer flex justify-center items-center flex-col group"
+  href="/dirk-heckmann-de.vcf"
+>
+  <div
+    class="relative w-full h-96 scale-100 group-hover:scale-[1.01] transition-transform duration-500 ease-in-out"
+  >
+    <img
+      src={imageSource}
+      class="absolute top-0 left-0 w-full h-full rounded-3xl z-20 p-[1.5px] object-cover"
+      alt=""
+    />
+    <div
+      class="top-0 left-0 w-full h-full bg-gradient-to-tr from-slate-100 via-transparent to-white rounded-3xl z-10 absolute shadow-lg"
+    >
+    </div>
+    <div
+      class="-z-10 absolute top-0 left-0 w-full h-full rounded-tl-3xl skew-x-2 rounded-tr-3xl rounded-br-2xl rounded-bl-2xl scale-110 opacity-10 group-hover:opacity-30 transition-opacity duration-500 blur-2xl bg-gradient-to-tr from-blue-300 via-yellow-400 to-orange-400"
+    >
+    </div>
+  </div>
+  <p
+    class="text-center mt-4 tracking-[0.25px] text-black/70 group-hover:text-black transition-colors duration-200 ease-in-out"
+  >
+    <Fragment set:html={caption.split("\n").join("<br/>")} />
+  </p>
+</a>
