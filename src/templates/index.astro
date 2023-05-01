@@ -10,7 +10,7 @@ const { fields: home } = await getHome(lang);
 const { fields: meta } = await getMeta(lang);
 ---
 
-<Layout title={meta.ogTitle}>
+<Layout title={meta.ogTitle} description={meta.ogDescription}>
   <main class="max-w-2xl mx-auto p-8">
     <div class="mt-12 flex justify-between flex-col">
       <h1 class="font-semibold text-2xl tracking-[0.2px]">

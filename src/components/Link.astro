@@ -12,19 +12,24 @@ const { title, content, link } = fields;
 
 <a
   href={link?.toString() || "#"}
-  class={clsx("flex flex-col items-start gap-1", {
+  class={clsx("flex flex-col items-start gap-1 group", {
     "cursor-pointer": link,
     "cursor-default": !link,
   })}
   target="_blank"
 >
-  <p class="text-gray-500 text-[15px]">
+  <p
+    class="text-gray-500 text-[15px] group-hover:text-gray-700 transition-colors duration-200 ease-in-out"
+  >
     {title}
   </p>
   <p
-    class={clsx("font-medium decoration-gray-400 underline-offset-2", {
-      underline: link,
-    })}
+    class={clsx(
+      "font-medium decoration-gray-400 text-gray-800 group-hover:text-gray-950 transition-colors duration-200 ease-in-out underline-offset-2",
+      {
+        underline: link,
+      }
+    )}
   >
     <Fragment set:html={content.split("\\n").join("<br />")} />
   </p>

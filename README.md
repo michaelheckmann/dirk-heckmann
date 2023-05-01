@@ -1,5 +1,5 @@
 <p align="center">
-<img src="heroimage.png">
+<img src="image.png">
 </p>
 
 # dirk-heckmann.info 👋💳
