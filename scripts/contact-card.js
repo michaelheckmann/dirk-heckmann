@@ -27,7 +27,7 @@ const contactCard = () => {
         vCard.firstName = card.firstName;
         vCard.lastName = card.lastName;
         vCard.title = card.jobTitle;
-        vCard.photo.attachFromUrl("https:" + card.image.fields.file.url);
+        vCard.photo.attachFromUrl(card.image.fields.file.url);
 
         vCard.workPhone = card.phone;
         vCard.email = card.email;

@@ -24,9 +24,10 @@ const { fields: meta } = await getMeta(lang);
       <Card
         imageSource={home.image?.fields.file?.url as string}
         caption={home.downloadText}
+        captionMobile={home.downloadTextMobile}
       />
     </div>
-    <div class="grid grid-cols-2 gap-x-4 gap-y-16 mt-20">
+    <div class="grid sm:grid-cols-2 gap-x-4 gap-y-16 mt-20">
       {
         home.linkLists.map((l) => (
           <LinkList

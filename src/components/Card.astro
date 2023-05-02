@@ -2,9 +2,10 @@
 export interface Props {
   imageSource: string;
   caption: string;
+  captionMobile: string;
 }
 
-const { imageSource, caption } = Astro.props;
+const { imageSource, caption, captionMobile } = Astro.props;
 ---
 
 <a
@@ -30,7 +31,31 @@ const { imageSource, caption } = Astro.props;
   </div>
   <p
     class="text-center mt-4 tracking-[0.25px] text-black/70 group-hover:text-black transition-colors duration-200 ease-in-out"
+    id="download"
   >
     <Fragment set:html={caption.split("\n").join("<br/>")} />
   </p>
+  <p
+    class="text-center mt-4 tracking-[0.25px] text-black/70 group-hover:text-black transition-colors duration-200 ease-in-out"
+    id="downloadMobile"
+  >
+    <Fragment set:html={captionMobile.split("\n").join("<br/>")} />
+  </p>
 </a>
+
+<script>
+  // @ts-ignore
+  const isTouchDevice =
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0 ||
+    // @ts-ignore
+    navigator.msMaxTouchPoints > 0;
+
+  if (isTouchDevice) {
+    const downloadText = document.getElementById("download");
+    if (downloadText) downloadText.style.display = "none";
+  } else {
+    const downloadText = document.getElementById("downloadMobile");
+    if (downloadText) downloadText.style.display = "none";
+  }
+</script>
